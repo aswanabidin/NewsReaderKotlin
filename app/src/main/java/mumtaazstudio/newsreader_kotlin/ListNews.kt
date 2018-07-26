@@ -2,23 +2,29 @@ package mumtaazstudio.newsreader_kotlin
 
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.view.MenuItemCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
-import android.view.View
+import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.EditText
+import android.widget.ImageButton
 import com.squareup.picasso.Picasso
 import com.wang.avi.AVLoadingIndicatorView
 import kotlinx.android.synthetic.main.activity_list_news.*
-import kotlinx.android.synthetic.main.activity_main.*
 import mumtaazstudio.newsreader_kotlin.Adapter.NewsAdapter
 import mumtaazstudio.newsreader_kotlin.Common.Common
 import mumtaazstudio.newsreader_kotlin.Interface.NewsServices
+import mumtaazstudio.newsreader_kotlin.Model.Article
 import mumtaazstudio.newsreader_kotlin.Model.News
 import retrofit2.Call
 import retrofit2.Response
-import javax.security.auth.callback.Callback
+import kotlin.jvm.java
 
 class ListNews : AppCompatActivity() {
 
@@ -28,8 +34,11 @@ class ListNews : AppCompatActivity() {
     lateinit var layoutManager: LinearLayoutManager
     lateinit var swipeRefresh_source: SwipeRefreshLayout
     lateinit var avi:AVLoadingIndicatorView
+    lateinit var searchView: SearchView
+    lateinit var toolbar: Toolbar
 
-    var searchView:SearchView? = null
+    var list:MutableList<Article> = mutableListOf()
+    var btnBack:ImageButton? = null
 
     var webHotUrl:String? = ""
     var source=""
@@ -38,6 +47,16 @@ class ListNews : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_news)
+
+        toolbar = findViewById(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+
+
+        btnBack = findViewById(R.id.btn_back) as ImageButton
+        btnBack!!.setOnClickListener {
+            finish()
+        }
+
 
         mService = Common.newsService
 
@@ -142,5 +161,65 @@ class ListNews : AppCompatActivity() {
                     })
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main,menu)
+        var item: MenuItem = menu!!.findItem(R.id.action_search)
+        searchView = MenuItemCompat
+                .getActionView(item) as SearchView
+
+        MenuItemCompat.setOnActionExpandListener(item, object : MenuItemCompat.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                toolbar.setBackgroundColor(Color.WHITE)
+                (searchView.findViewById(R.id.search_src_text) as EditText)
+                        .setHintTextColor(Color.BLACK)
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                toolbar.setBackgroundColor(resources.getColor(R.color.colorPrimary))
+                searchView.setQuery("Search...",true)
+                return true
+            }
+
+        })
+        searchView.maxWidth = Int.MAX_VALUE
+        searchNews(searchView)
+        return true
+    }
+
+    private fun searchNews(searchView: SearchView) {
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return true
+            }
+
+        })
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        if (item!!.itemId == R.id.action_search)
+        {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (!searchView.isIconified)
+        {
+            searchView.isIconified = true
+            return
+        }
+        super.onBackPressed()
     }
 }
