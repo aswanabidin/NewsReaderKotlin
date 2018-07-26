@@ -45,19 +45,19 @@ class NewsAdapter() : RecyclerView.Adapter<NewsViewHolder>(), Filterable {
 
         //Load image using picasso
         Picasso.with(context)
-                .load(list[position].urlToImage)
+                .load(listFiltered[position].urlToImage)
                 .into(holder.news_image)
 
-        if (list[position].title!!.length > 70) {
-            holder.news_title.text = list[position].title!!.substring(0, 70) + "..."
+        if (listFiltered[position].title!!.length > 70) {
+            holder.news_title.text = listFiltered[position].title!!.substring(0, 70) + "..."
         } else {
-            holder.news_title.text = list[position].title!!
+            holder.news_title.text = listFiltered[position].title!!
         }
 
-        if (list[position].publishedAt != null) {
+        if (listFiltered[position].publishedAt != null) {
             var date: Date? = null
             try {
-                date = ISO8601DateParser.parse(list[position].publishedAt!!)
+                date = ISO8601DateParser.parse(listFiltered[position].publishedAt!!)
 
             } catch (e: ParseException) {
                 e.printStackTrace()
@@ -84,7 +84,7 @@ class NewsAdapter() : RecyclerView.Adapter<NewsViewHolder>(), Filterable {
                     listFiltered = list
                 } else {
                     var filteredList: MutableList<Article> = mutableListOf()
-                    for (a: Article in list) {
+                    for (a: Article in listFiltered) {
                         if (a.title!!.toLowerCase().contains(chatString.toLowerCase())) {
                             filteredList.add(a)
                         }
