@@ -2,14 +2,15 @@
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/swipeRefresh_news"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ListNews">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <RelativeLayout
             android:id="@+id/linear_layout_news"
@@ -19,20 +20,29 @@
             <com.flaviofaria.kenburnsview.KenBurnsView
                 android:id="@+id/image_top_news"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/tv_author_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:text="Author"
-                    android:id="@+id/tv_author_top"
                     android:textColor="@android:color/white"
                     android:textSize="18sp" />
+
+                <!--<com.wang.avi.AVLoadingIndicatorView-->
+                    <!--android:id="@+id/avi_top_news"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--app:indicatorColor="@android:color/white"-->
+                    <!--app:indicatorName="BallPulseIndicator" />-->
 
 
                 <LinearLayout

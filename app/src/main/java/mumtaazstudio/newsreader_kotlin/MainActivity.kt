@@ -1,6 +1,5 @@
 package mumtaazstudio.newsreader_kotlin
 
-import android.app.ProgressDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var layoutManager: LinearLayoutManager
     lateinit var mServices: NewsServices
     lateinit var adapter: SourceAdapter
-    lateinit var dialog: ProgressDialog
+    lateinit var dialog: android.app.AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +42,7 @@ class MainActivity : AppCompatActivity() {
         layoutManager = LinearLayoutManager(this)
         recyclerview_source.layoutManager = layoutManager
 
-        dialog = ProgressDialog(this)
-        dialog.setMessage("Loading...")
+        dialog = SpotsDialog(this)
 
         getWebsiteSources(false)
     }

@@ -1,6 +1,7 @@
 package mumtaazstudio.newsreader_kotlin.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.squareup.picasso.Picasso
 import mumtaazstudio.newsreader_kotlin.Common.ISO8601DateParser
 import mumtaazstudio.newsreader_kotlin.Interface.ItemClickListener
 import mumtaazstudio.newsreader_kotlin.Model.Article
+import mumtaazstudio.newsreader_kotlin.NewsDetails
 import mumtaazstudio.newsreader_kotlin.R
 import java.text.ParseException
 import java.util.*
@@ -29,7 +31,9 @@ class NewsAdapter(val newsList: MutableList<Article>, private val context: Conte
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
 
         //Load image using picasso
-        Picasso.with(context).load(newsList[position].urlToImage).to(holder.news_image)
+        Picasso.with(context)
+                .load(newsList[position].urlToImage)
+                .into(holder.news_image)
 
         if (newsList[position].title!!.length > 65)
         {
@@ -54,7 +58,9 @@ class NewsAdapter(val newsList: MutableList<Article>, private val context: Conte
 
         holder.setItemClickListener(object :ItemClickListener {
             override fun onClick(view: View, position: Int) {
-
+                val details = Intent(context, NewsDetails::class.java)
+                details.putExtra("webURL", newsList[position].url)
+                context.startActivity(details)
             }
 
         })

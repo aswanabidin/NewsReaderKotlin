@@ -12,11 +12,10 @@ import mumtaazstudio.newsreader_kotlin.ListNews
 import mumtaazstudio.newsreader_kotlin.Model.Website
 import mumtaazstudio.newsreader_kotlin.R
 
-class SourceAdapter(val context: Context,  val website: Website) :
-        RecyclerView.Adapter<SourceViewHolder>() {
+class SourceAdapter(private val context: Context, private val website: Website):RecyclerView.Adapter<SourceViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SourceViewHolder {
-        val inflater =  LayoutInflater.from(parent.context)
+        val inflater =  LayoutInflater.from(parent!!.context)
         val itemView = inflater.inflate(R.layout.card_source_layout, parent, false)
         return SourceViewHolder(itemView)
     }
@@ -27,17 +26,15 @@ class SourceAdapter(val context: Context,  val website: Website) :
 
     override fun onBindViewHolder(holder: SourceViewHolder, position: Int) {
         holder!!.source_title.text = website.sources!![position].name
-        holder!!.setItemClickListener(object : ItemClickListener
-        {
-            override fun onClick(view: View, position: Int) {
+        holder!!.itemView.setOnClickListener {
 
-                Toast.makeText(context, "Test", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "Test", Toast.LENGTH_SHORT).show()
                 val intent = Intent(context, ListNews::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.putExtra("source", website.sources!![position].id)
                 context.startActivity(intent)
             }
 
-        })
 
 
     }
