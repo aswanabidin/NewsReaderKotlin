@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.view.View
 import com.squareup.picasso.Picasso
 import com.wang.avi.AVLoadingIndicatorView
@@ -27,6 +28,8 @@ class ListNews : AppCompatActivity() {
     lateinit var layoutManager: LinearLayoutManager
     lateinit var swipeRefresh_source: SwipeRefreshLayout
     lateinit var avi:AVLoadingIndicatorView
+
+    var searchView:SearchView? = null
 
     var webHotUrl:String? = ""
     var source=""
@@ -90,6 +93,7 @@ class ListNews : AppCompatActivity() {
                                     .into(image_top_news)
                             tv_title_top.text = response!!.body()!!.articles!![0].title
                             tv_author_top.text = response!!.body()!!.articles!![0].author
+                            toolbar_top_news.text = response!!.body()!!.articles!![0].author
 
                             webHotUrl = response!!.body()!!.articles!![0].url
 
@@ -122,6 +126,7 @@ class ListNews : AppCompatActivity() {
                                     .into(image_top_news)
                             tv_title_top.text = response!!.body()!!.articles!![0].title
                             tv_author_top.text = response!!.body()!!.articles!![0].author
+                            toolbar_top_news.text = response!!.body()!!.articles!![0].author
 
                             webHotUrl = response!!.body()!!.articles!![0].url
 
