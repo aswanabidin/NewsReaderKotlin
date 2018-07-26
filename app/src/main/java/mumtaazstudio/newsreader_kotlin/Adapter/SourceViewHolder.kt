@@ -12,7 +12,7 @@ class SourceViewHolder(itemView: View):RecyclerView.ViewHolder(itemView), View.O
 
     fun setItemClickListener(itemClickListener: ItemClickListener)
     {
-        this.itemClickListener = itemClickListener;
+        this.itemClickListener = itemClickListener
     }
 
     override fun onClick(v: View?) {

@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         if (!isRefresh)
         {
             val cache = Paper.book().read<String>("cache")
-            if (cache != null && !cache.isBlank() && cache != "null")
+            if (cache != null && !cache.isEmpty() && cache != "null")
             {
                 val webSite =  Gson().fromJson<Website>(cache, Website::class.java)
                 adapter = SourceAdapter(baseContext, webSite)
