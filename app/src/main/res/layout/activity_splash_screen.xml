@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.NewsDetails">
+    android:background="@color/colorGreen"
+    tools:context=".SplashScreen">
 
-    <WebView
-        android:layout_width="match_parent"
-        android:id="@+id/webView"
-        android:layout_height="match_parent"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@android:color/white"
+        android:src="@drawable/ic_news"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>
